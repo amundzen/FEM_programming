@@ -1,0 +1,54 @@
+################
+# Global setup #
+################
+
+
+# Version of CMake required
+cmake_minimum_required (VERSION 3.0 FATAL_ERROR)
+
+# Warn if attempting in-source build
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+    message (FATAL_ERROR "In-source builds are not allowed! Please select a build directory outside your perforce workspace!")
+endif (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+
+project (FEM_excercises
+    VERSION 0.0.0.0
+    LANGUAGES Fortran)
+
+# ExternalProject is a CMake plugin for building external projects on the fly    
+include (ExternalProject)
+
+# The time at which CMake was run is placed into the CONFIGURE_TIMESTAMP variable.
+string (TIMESTAMP DEEPLINE_CONFIGURE_DATE_AND_TIME)
+
+# Platform variable set for call to regular makefile, name of results folder
+message (STATUS "Platform is: '${CMAKE_SYSTEM_NAME}'")
+
+##################################################################
+# Compiler flags. NB: These can be overridden in subdirectories! #
+##################################################################
+# Fortran compiler
+if (${CMAKE_Fortran_COMPILER_ID} MATCHES "GNU")
+    # TODO!
+    set (CMAKE_Fortran_FLAGS "-Og -pthread -ffixed-line-length-none -ffree-line-length-none -fno-omit-frame-pointer")
+
+elseif (${CMAKE_Fortran_COMPILER_ID} MATCHES "NAG")
+    set (CMAKE_Fortran_FLAGS " -dusty -mismatch_all -abi=64c -thread_safe ")
+    set (CMAKE_Fortran_FLAGS_RELEASE " ")
+    set (CMAKE_Fortran_FLAGS_DEBUG " -O0 -C=all -g -pg ")
+    include_directories (simla dynpost simpost bflex2010post input)
+elseif (${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
+        set (CMAKE_Fortran_FLAGS "-fpp -debug:full -Od -Qsave -Qzero -traceback -Qmkl:sequential -nologo -MT -warn:truncated_source")
+        set (CMAKE_Fortran_FLAGS_RELEASE "")
+        set (CMAKE_Fortran_FLAGS_DEBUG "-Qprof-gen:srcpos -check:bounds,nouninit -fpe:0")
+else ()
+    message (WARNING "Unknown Fortran compiler: '${CMAKE_Fortran_COMPILER_ID}' - default compiler flags used")
+endif ()
+
+#add_subdirectory (testprogram testprogram)
+
+add_executable (hello
+#    ${FLEXNET_PUBKEY_OBJECT}
+#    ${SIMLA_FORTRAN_SOURCES}
+    hello.f90
+    )
