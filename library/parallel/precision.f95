@@ -1,0 +1,5 @@
+MODULE precision
+
+  INTEGER, PARAMETER :: iwp = SELECTED_REAL_KIND(15,300)
+
+END MODULE precision

@@ -38,17 +38,26 @@ elseif (${CMAKE_Fortran_COMPILER_ID} MATCHES "NAG")
     set (CMAKE_Fortran_FLAGS_DEBUG " -O0 -C=all -g -pg ")
     include_directories (simla dynpost simpost bflex2010post input)
 elseif (${CMAKE_Fortran_COMPILER_ID} MATCHES "Intel")
-        set (CMAKE_Fortran_FLAGS "-fpp -debug:full -Od -Qsave -Qzero -traceback -Qmkl:sequential -nologo -MT -warn:truncated_source")
-        set (CMAKE_Fortran_FLAGS_RELEASE "")
-        set (CMAKE_Fortran_FLAGS_DEBUG "-Qprof-gen:srcpos -check:bounds,nouninit -fpe:0")
+        set (CMAKE_Fortran_FLAGS "-warn:all")
+#        set (CMAKE_Fortran_FLAGS_RELEASE "")
+#        set (CMAKE_Fortran_FLAGS_DEBUG "-Qprof-gen:srcpos -check:bounds,nouninit -fpe:0")
 else ()
     message (WARNING "Unknown Fortran compiler: '${CMAKE_Fortran_COMPILER_ID}' - default compiler flags used")
 endif ()
 
-#add_subdirectory (testprogram testprogram)
+#add_subdirectory (library)
 
-add_executable (hello
+add_executable (p41
 #    ${FLEXNET_PUBKEY_OBJECT}
 #    ${SIMLA_FORTRAN_SOURCES}
-    hello.f90
+    p41.f90
+    library/main/main_int.f90
+    library/main/getname.f90
+    library/main/formnf.f90
+    library/main/num_to_g.f90
+    library/main/fkdiag.f90
+    library/main/rod_km.f90
+    library/main/fsparv.f90
+    library/main/sparin.f90
+    library/main/spabac.f90
     )
