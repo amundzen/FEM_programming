@@ -8,7 +8,8 @@ PROGRAM p41
  IMPLICIT NONE
  INTEGER,PARAMETER::iwp=SELECTED_REAL_KIND(15)
  INTEGER::fixed_freedoms,i,iel,k,loaded_nodes,ndof=2,nels,neq,nod=2,      &
-   nodof=1,nn,nprops=1,np_types,nr,nlen
+   nodof=1,nn,nprops=1,nr,nlen
+ Integer:: np_types     !< Number of different property types
  REAL(iwp)::penalty=1.0e20_iwp,zero=0.0_iwp
 !-----------------------dynamic arrays------------------------------------
  INTEGER,ALLOCATABLE::etype(:),g(:),g_g(:,:),kdiag(:),nf(:,:),no(:),      &
