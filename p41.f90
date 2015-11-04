@@ -21,16 +21,22 @@ PROGRAM p41
  CALL getname(argv,nlen)
  OPEN(10,FILE=argv(1:nlen)//'.dat')
  OPEN(11,FILE=argv(1:nlen)//'.res')
- READ(10,*)nels,np_types
+ READ(10,*)nels,np_types ! First row in input is number of elements (4) and
+                         ! element property types (1)
  nn=nels+1
  ALLOCATE(g(ndof),num(nod),nf(nodof,nn),etype(nels),ell(nels),eld(ndof),  &
    km(ndof,ndof),action(ndof),g_g(ndof,nels),prop(nprops,np_types))
- READ(10,*)prop
+ READ(10,*)prop          ! Read element property
  etype=1
  IF(np_types>1)READ(10,*)etype
- READ(10,*)ell
- nf=1
+ READ(10,*)ell           ! Read element lengths
+ nf=1                    ! set nf to 1
+ ! Formulation of nf is achieved by specifying , as data to be read in, the number of
+ ! any node which has one or more restrained freedoms, followed by the digit 0 if
+ ! the node is restrained in that sense and by 1 if it is not.
  READ(10,*)nr,(k,nf(:,k),i=1,nr) ! nf = nodal freedom matrix, set node k to value nr
+ ! nf = nodal freedom array 
+ ! contains information about the degrees of freedom associated with
  CALL formnf(nf) ! Form nf matrix
  neq=MAXVAL(nf) ! neq = number of degrees of freedom in mesh
  ALLOCATE(kdiag(neq),loads(0:neq)) ! kdiag = Diagonal term location vector
