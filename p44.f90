@@ -23,7 +23,7 @@ PROGRAM p44
  READ(10,*)nels,nn,ndim,nprops,np_types
  IF(ndim==2)nodof=3
  IF(ndim==3)nodof=6
- ndof=nod*nodof
+ ndof=nod*nodof !< nod is number of nodes per element
  ALLOCATE(nf(nodof,nn),km(ndof,ndof),coord(nod,ndim),g_coord(ndim,nn),    &
    eld(ndof),action(ndof),g_num(nod,nels),num(nod),g(ndof),gamma(nels),   &
    g_g(ndof,nels),prop(nprops,np_types),etype(nels))
