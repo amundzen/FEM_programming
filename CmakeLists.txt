@@ -18,8 +18,6 @@ project (FEM_excercises
 # ExternalProject is a CMake plugin for building external projects on the fly    
 include (ExternalProject)
 
-# The time at which CMake was run is placed into the CONFIGURE_TIMESTAMP variable.
-string (TIMESTAMP DEEPLINE_CONFIGURE_DATE_AND_TIME)
 
 # Platform variable set for call to regular makefile, name of results folder
 message (STATUS "Platform is: '${CMAKE_SYSTEM_NAME}'")
@@ -48,8 +46,6 @@ endif ()
 #add_subdirectory (library)
 
 add_executable (p41
-#    ${FLEXNET_PUBKEY_OBJECT}
-#    ${SIMLA_FORTRAN_SOURCES}
     p41.f90
     library/main/main_int.f90
     library/main/getname.f90
